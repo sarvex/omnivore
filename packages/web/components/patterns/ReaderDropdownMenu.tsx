@@ -22,7 +22,7 @@ export function ReaderDropdownMenu(props: DropdownMenuProps): JSX.Element {
         title="Edit Labels (l)"
       />
       <DropdownOption
-        onSelect={() => props.articleActionHandler('showEditModal')}
+        onSelect={() => props.articleActionHandler('openInspector-edit')}
         title="Edit Info (i)"
       />
       <DropdownOption
