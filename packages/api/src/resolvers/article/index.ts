@@ -570,6 +570,7 @@ export const saveArticleReadingProgressResolver = authorized<
         readingProgressPercent,
         readingProgressAnchorIndex,
         readingProgressTopPercent,
+        force,
       },
     },
     { uid, pubsub }
@@ -592,7 +593,9 @@ export const saveArticleReadingProgressResolver = authorized<
     }
     // If we have a top percent, we only save it if it's greater than the current top percent
     // or set to zero if the top percent is zero.
-    const readingProgressTopPercentToSave = readingProgressTopPercent
+    const readingProgressTopPercentToSave = force
+      ? readingProgressTopPercent
+      : readingProgressTopPercent
       ? Math.max(
           readingProgressTopPercent,
           libraryItem.readingProgressTopPercent || 0
