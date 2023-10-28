@@ -125,7 +125,7 @@ def create_index(client):
 
 def update_postgres_data(conn, query, table):
     try:
-        print('Executing query: {}'.format(query))
+        print(f'Executing query: {query}')
         # update data in postgres
         cursor = conn.cursor()
         cursor.execute(query)
@@ -158,7 +158,7 @@ def elastic_bulk_insert(client, doc_list) -> int:
 
 def ingest_data_to_elastic(conn, query, data_file):
     try:
-        print('Executing query: {}'.format(query))
+        print(f'Executing query: {query}')
         # export data from postgres
         count = 0
         import_count = 0
@@ -215,10 +215,7 @@ def validated_date(date):
 
         datetime_object = datetime.strptime(date, '%Y-%m-%dT%H:%M:%S.%fZ')
         # Make sure the date year is not greater than 9999
-        if datetime_object.year > 9999:
-            return None
-
-        return date
+        return None if datetime_object.year > 9999 else date
     except Exception as err:
         print('error validating date', err)
         return None

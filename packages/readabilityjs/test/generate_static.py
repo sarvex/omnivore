@@ -6,8 +6,8 @@ from os.path import isfile, join
 testdirs = [f for f in listdir(
     "test-pages") if not isfile(join("test-pages", f))]
 
-file = open("index.html", "w")
-file.write("""
+with open("index.html", "w") as file:
+    file.write("""
 <!DOCTYPE html>
 <html>
 
@@ -24,8 +24,8 @@ file.write("""
     <ul>
 """)
 
-for testdir in testdirs:
-    file.write(f"""
+    for testdir in testdirs:
+        file.write(f"""
       <li>{testdir}<br />
         <a href="./test-pages/{testdir}/source.html" target="iframe_b">[source]</a>
         <a href="./test-pages/{testdir}/expected.html" target="iframe_b">[readability]</a>
@@ -34,7 +34,7 @@ for testdir in testdirs:
   """)
 
 
-file.write("""
+    file.write("""
     </ul>
   </td>
 <td valign="top">
@@ -48,5 +48,3 @@ file.write("""
 
 </html>
 """)
-
-file.close()

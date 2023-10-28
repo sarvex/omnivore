@@ -97,8 +97,7 @@ def get_uuid(val):
     try:
         return uuid.UUID(val)
     except ValueError:
-        id = convert_string_to_uuid(val)
-        return id
+        return convert_string_to_uuid(val)
 
 
 def convert_string_to_uuid(val):
@@ -111,10 +110,7 @@ def convert_string_to_datetime(val):
         return None
     try:
         date = datetime.strptime(val, DATE_FORMAT)
-        if date.year <= 1:
-            # avoid year 0 is out of range error
-            return None
-        return date
+        return None if date.year <= 1 else date
     except Exception as err:
         print('Convert string to datetime ERROR:', err)
         return None
@@ -274,9 +270,7 @@ async def insert_into_postgres(insert_query, db_conn, records, original_ids):
 def sanitize_tuples(tuples):
     sanitize_tuples = []
     for tuple in tuples:
-        sanitize_tuple = []
-        for val in tuple:
-            sanitize_tuple.append(sanitize_string(val))
+        sanitize_tuple = [sanitize_string(val) for val in tuple]
         sanitize_tuples.append(sanitize_tuple)
     return sanitize_tuples
 
@@ -289,15 +283,11 @@ def sanitize_string(val):
 
 
 def remove_null_bytes(val):
-    if val is None:
-        return None
-    return val.replace('\u0000', '')
+    return None if val is None else val.replace('\u0000', '')
 
 
 def replace_surrogates(val):
-    if val is None:
-        return None
-    return val.encode('utf-8', 'replace').decode('utf-8')
+    return None if val is None else val.encode('utf-8', 'replace').decode('utf-8')
 
 
 async def main():

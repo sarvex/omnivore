@@ -123,10 +123,7 @@ def import_highlights_to_es(client, highlights, pageId) -> int:
             id=pageId,
             body={'doc': {'highlights': highlights}})
 
-        count = 0
-        if resp['result'] == 'updated':
-            count = len(highlights)
-
+        count = len(highlights) if resp['result'] == 'updated' else 0
         print(f'Added {count} highlights to page {pageId}')
 
         return count
